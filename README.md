@@ -1,25 +1,33 @@
-# MADDPG
+# The leader-follower-framework based formation control algorithm, combined with a multi-agent reinforcement learning algorithm
 
-This is a pytorch implementation of MADDPG on [Multi-Agent Particle Environment(MPE)](https://github.com/openai/multiagent-particle-envs), the corresponding paper of MADDPG is [Multi-Agent Actor-Critic for Mixed Cooperative-Competitive Environments](https://arxiv.org/abs/1706.02275).
+## task description
+
+This is a scalable leader-follower formation control framework.
+
+Scalable Learning: Our framework demonstrates scalability, allowing the knowledge gained from training with 6 AGVs to effortlessly extend to formations involving varying numbers of AGVs, ranging from 3 to 12.
+
+Versatile Formation Shapes: We showcase the adaptability of our approach by successfully addressing formation tasks with not only basic shapes like lines and circles but also more intricate shapes such as S and V shapes. This versatility enhances the applicability of our framework to a wide range of real-world scenarios.
+![trac_c](https://github.com/songya-create/leader-follower-AC-agent/assets/63812791/4a75e9fd-5736-46ec-982f-71af105ffecf)
+![trac_l](https://github.com/songya-create/leader-follower-AC-agent/assets/63812791/59722b00-1cea-40e3-a63f-1decfc1df96d)
+![trac_12c](https://github.com/songya-create/leader-follower-AC-agent/assets/63812791/795d141e-a11a-4414-9354-1a58e78c5936)
+![trac_12l](https://github.com/songya-create/leader-follower-AC-agent/assets/63812791/d69b377b-b953-461a-8c74-1870932af284)
+
+## algorithm description
+
+Firstly, we establish a formation shape generator by integrating the leader-follower algorithm. This enables us to ensure coordinated movement of AGVs within the formation.
+
+Secondly, we design an action output controller by incorporating a multi-agent reinforcement learning algorithm. This controller empowers AGVs to make dynamic decisions based on environmental cues and desired formation shapes.
+
+Thirdly, to enhance the adaptability of the actor-critic network, we employ a graph attention mechanism. This mechanism allows AGVs to focus on relevant environmental information crucial for decision-making.
 
 ## Requirements
 
-- python=3.6.5
+- python=3.7
 - [Multi-Agent Particle Environment(MPE)](https://github.com/openai/multiagent-particle-envs)
-- torch=1.1.0
+- torch=1.12.0(cud11
 
 ## Quick Start
 
-```shell
-$ python main.py --scenario-name=simple_tag --evaluate-episodes=10
-```
-
-Directly run the main.py, then the algrithm will be tested on scenario 'simple_tag' for 10 episodes, using the pretrained model.
+Directly run the main.py
 
 ## Note
-
-+ We have train the agent on scenario 'simple_tag', but the model we provide is not the best because we don't want to waste time on training, you can keep training it for better performence.
-
-+ There are 4 agents in simple_tag, including 3 predators and 1 prey. we use MADDPG to train predators to catch the prey. The prey's action can be controlled by you, in our case we set it random. 
-
-+ The default setting of Multi-Agent Particle Environment(MPE) is sparse reward, you can change it to dense reward by replacing 'shape=False' to 'shape=True' in file multiagent-particle-envs/multiagent/scenarios/simple_tag.py/.
